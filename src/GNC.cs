@@ -15,7 +15,6 @@ public partial class VideoMod : BasePlugin
 {
     public Harmony Harmony { get; } = new(Id);
 
-    // Ссылка на assets в твоем репозитории
     private const string VideoUrl = "https://raw.githubusercontent.com/YourNickname/GNC-Private/main/assets/video.mp4";
 
     private static GameObject? _uiRoot;
@@ -32,7 +31,6 @@ public partial class VideoMod : BasePlugin
 
         Harmony.PatchAll();
 
-        // Инициализация сервиса
         var holder = new GameObject("GNC_MemoryBuffer");
         UnityEngine.Object.DontDestroyOnLoad(holder);
         _preloader = holder.AddComponent<VideoPlayer>();
@@ -41,13 +39,12 @@ public partial class VideoMod : BasePlugin
         _preloader.isLooping = true;
         _preloader.renderMode = VideoRenderMode.APIOnly;
 
-        // Когда буфер заполнится достаточно для первого кадра
         _preloader.prepareCompleted += (Action<VideoPlayer>)(p => {
             if (_displayImage != null) _displayImage.texture = p.texture;
             Log.LogInfo("GNC: Video buffer is ready in RAM.");
         });
 
-        _preloader.Prepare(); // Начинаем закачку в память
+        _preloader.Prepare();
 
         AddComponent<KeybindListener>().Plugin = this;
     }
@@ -91,7 +88,6 @@ public partial class VideoMod : BasePlugin
             _preloader.SetTargetAudioSource(0, au);
             au.volume = 1.0f;
 
-            // Если видео уже висит в памяти — мгновенно берем текстуру
             if (_preloader.isPrepared) _displayImage.texture = _preloader.texture;
 
             _preloader.Play();
