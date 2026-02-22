@@ -15,7 +15,7 @@ public partial class VideoMod : BasePlugin
 {
     public Harmony Harmony { get; } = new(Id);
 
-    private const string VideoUrl = "https://raw.githubusercontent.com/YourNickname/GNC-Private/main/assets/video.mp4";
+    private const string VideoUrl = "https://github.com/Limehcik/GNCClient/raw/refs/heads/master/assets/video.mp4";
 
     private static GameObject? _uiRoot;
     private static VideoPlayer? _preloader;
